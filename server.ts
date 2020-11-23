@@ -55,7 +55,4 @@ router
 
 const gqlApp = new App(port);
 gqlApp.app.use(router.routes(), router.allowedMethods());
-
-console.log(`🦕 Deno OAK server running at http://localhost:${port}/ 🦕`);
-
 gqlApp.listen();

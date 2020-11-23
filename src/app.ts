@@ -5,6 +5,12 @@ export class App {
 
     constructor(public port: number) {
         this.app = new Application();
+
+        this.app.addEventListener('listen', ({ hostname, port, secure }) => {
+            console.log(`🦕 Deno/GraphQL OAK Server running onc: ${
+                secure ? "https://" : "http://"
+            }${hostname ?? "localhost"}:${port}/ 🦕`);
+        });
     }
 
     public async listen() {
