@@ -1,5 +1,5 @@
 import { Application, applyGraphQL, gql, Router } from './config/deps.ts';
-
+import { schema as typeDefs } from './schema/index.ts';
 export class App {
     public app: Application;
 
@@ -16,17 +16,6 @@ export class App {
         type: 'STUDIO'
         },
     ];
-    
-    schema = gql(`
-        type Property {
-        id: String
-        name: String
-        type: String
-        }
-        type Query {
-        properties: [Property]
-        }
-    `);
     
     resolvers = {
         Query: {
@@ -72,7 +61,7 @@ export class App {
     private async initializeRoutes() {
         const GraphQLService = await applyGraphQL<Router>({
             Router,
-            typeDefs: this.schema,
+            typeDefs,
             resolvers: this.resolvers
         });
         this.app.use(GraphQLService.routes(), GraphQLService.allowedMethods());
