@@ -1,6 +1,7 @@
 import * as db from '../data/db.ts'
 import { GQLError, GraphQLScalarType, Kind } from "./../config/deps.ts";
 import type { Booking, Customer, MutationAddBookingArgs, Property } from "../schema/types/schemaTypes.ts";
+import { resolveLogger } from "./helpers/resolverLogger.ts";
 
 
 // Custom Scalar
@@ -23,7 +24,8 @@ const DateTime = new GraphQLScalarType({
 
 export const bookingResolvers = {
     Query: {
-        bookings(_parent: any, { offset = 0, limit = 5, search = '' }): Booking[] {
+        bookings(_parent: any, { offset = 0, limit = 5, search = '' }, context: any): Booking[] {
+            resolveLogger(context, 'bookings');
             return db.getBookings(offset, limit);
         },
     },
