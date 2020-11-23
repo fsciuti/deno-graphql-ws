@@ -1,29 +1,8 @@
 import { Application, applyGraphQL, gql, Router } from './config/deps.ts';
 import { schema as typeDefs } from './schema/index.ts';
+import { resolvers } from './resolvers/index.ts'
 export class App {
     public app: Application;
-
-
-    properties = [
-        {
-        id: 'p1',
-        name: 'Property P1',
-        type: 'VILLA'
-        },
-        {
-        id: 'p2',
-        name: 'Property P2',
-        type: 'STUDIO'
-        },
-    ];
-    
-    resolvers = {
-        Query: {
-            properties: () => {
-                return this.properties;
-            },
-        }
-    };
 
     constructor(public port: number) {
         this.app = new Application();
@@ -62,7 +41,7 @@ export class App {
         const GraphQLService = await applyGraphQL<Router>({
             Router,
             typeDefs,
-            resolvers: this.resolvers
+            resolvers
         });
         this.app.use(GraphQLService.routes(), GraphQLService.allowedMethods());
     }
