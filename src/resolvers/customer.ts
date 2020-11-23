@@ -20,7 +20,7 @@ export const customerResolvers = {
   },
   Customer: {
     bookings(parent: any) {
-    //  return db.getBooking(parent.customerId);
+      return db.getBookingsByCustomer(parent.id);
     },
     vehicle(parent: any) {
       return db.getVehicle(parent.vehicleId);

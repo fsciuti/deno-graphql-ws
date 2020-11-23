@@ -1,6 +1,43 @@
-import { AddCustomerInput, AddPropertyInput, Customer, Property, Vehicle } from '../schema/schemaTypes.ts';
+import { AddBookingInput, AddCustomerInput, AddPropertyInput, Booking, Customer, Property, Vehicle } from '../schema/schemaTypes.ts';
 
 const data: any = {
+    Booking: [
+      {
+        id: 'b0',
+        propertyId: 'p0',
+        customerId: 'c0',
+        startTime: '2019-05-04',
+        endTime: '2019-06-03',
+      },
+      {
+        id: 'b1',
+        propertyId: 'p0',
+        customerId: 'c0',
+        startTime: '2019-06-04',
+        endTime: '2019-07-03',
+      },
+      {
+        id: 'b2',
+        propertyId: 'p1',
+        customerId: 'c0',
+        startTime: '2019-10-04',
+        endTime: '2019-10-03',
+      },
+      {
+        id: 'b3',
+        propertyId: 'p1',
+        customerId: 'c0',
+        startTime: '2019-10-04',
+        endTime: '2019-10-03',
+      },
+      {
+        id: 'b4',
+        propertyId: 'p0',
+        customerId: 'c0',
+        startTime: '2019-10-04',
+        endTime: '2019-10-03',
+      },
+    ],
     Properties: [
         {
             id: 'p1',
@@ -62,11 +99,30 @@ export const getCustomer = (customerId: string): Customer => {
 }
 
 export const addCustomer = (customer: AddCustomerInput) => {
-    const newCustomer = { id: `c${getCustomers().length}`, ...customer };
+    const newCustomer: any = { id: `c${getCustomers().length}`, ...customer };
+    newCustomer.vehicleId = 'v1';
     data.Customers.push(newCustomer);
     return newCustomer;
 }
 
 export const getVehicle = (vehicleId: string): Vehicle => {
-    return <Vehicle>data.Vehicles.find((item: Vehicle) => vehicleId === item.id);
+  return <Vehicle>data.Vehicles.find((item: Vehicle) => vehicleId === item.id);
+}
+
+export const getBookings = (offset = 0, limit = 5, search = ''): Booking[] => {
+  return <Booking[]>data.Booking.slice(offset, offset + limit);
+}
+
+export const getBookingsByCustomer = (customer: string): Booking[] => {
+  return <Booking[]>data.Booking.filter((item: Booking & { customerId: string }) => item.customerId === customer);
+}
+  
+export const getBooking = (bookingId: string): Booking => {
+  return <Booking>data.Booking.find((item: Booking) => bookingId === item.id);;
+}
+
+export const addBooking = (booking: AddBookingInput) => {
+  const newBooking = { id: `b${data.Booking.length}`, ...booking};
+  data.Booking.push(newBooking);
+  return newBooking;
 }
