@@ -1,7 +1,40 @@
-import { Application } from './config/deps.ts';
+import { Application, applyGraphQL, gql, Router } from './config/deps.ts';
 
 export class App {
     public app: Application;
+
+
+    properties = [
+        {
+        id: 'p1',
+        name: 'Property P1',
+        type: 'VILLA'
+        },
+        {
+        id: 'p2',
+        name: 'Property P2',
+        type: 'STUDIO'
+        },
+    ];
+    
+    schema = gql(`
+        type Property {
+        id: String
+        name: String
+        type: String
+        }
+        type Query {
+        properties: [Property]
+        }
+    `);
+    
+    resolvers = {
+        Query: {
+            properties: () => {
+                return this.properties;
+            },
+        }
+    };
 
     constructor(public port: number) {
         this.app = new Application();
@@ -36,7 +69,14 @@ export class App {
             ctx.response.headers.set("X-Response-Time", `${ms}ms`);
         });
     }
-    private initializeRoutes() {}
+    private async initializeRoutes() {
+        const GraphQLService = await applyGraphQL<Router>({
+            Router,
+            typeDefs: this.schema,
+            resolvers: this.resolvers
+        });
+        this.app.use(GraphQLService.routes(), GraphQLService.allowedMethods());
+    }
 
     public async listen() {
         return await this.app.listen({ port: this.port });

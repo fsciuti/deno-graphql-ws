@@ -1,3 +1,6 @@
-export { Application, Router, send } from 'https://deno.land/x/oak/mod.ts';
+export { Application, Router, send } from 'https://deno.land/x/oak@v6.3.2/mod.ts';
 
-export { buildSchema, graphql, Source } from "https://cdn.skypack.dev/graphql@v15.4.0?dts";
+export {
+    applyGraphQL,
+    gql
+} from 'https://deno.land/x/oak_graphql@0.6.2/mod.ts'
