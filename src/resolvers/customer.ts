@@ -1,4 +1,4 @@
-import * as db from '../data/db.ts'
+import * as db from "../data/db.ts";
 import type { MutationAddCustomerArgs } from "../schema/types/schemaTypes.ts";
 
 export const customerResolvers = {
@@ -14,7 +14,7 @@ export const customerResolvers = {
         code: 200,
         success: true,
         message: "Customer was added!",
-        customer
+        customer,
       };
     },
   },
@@ -29,11 +29,11 @@ export const customerResolvers = {
   Vehicle: {
     __resolveType(parent: any) {
       if (parent.licensePlate) {
-        return 'Car';
+        return "Car";
       } else if (parent.bikeType) {
-        return 'Bike';
+        return "Bike";
       } else {
-        throw new Error('Could not resolve Vehicle type');
+        throw new Error("Could not resolve Vehicle type");
       }
     },
   },
