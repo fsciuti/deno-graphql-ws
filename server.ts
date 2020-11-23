@@ -1,6 +1,5 @@
-import { Application, Router, send } from 'https://deno.land/x/oak/mod.ts';
-
-import { buildSchema, graphql, Source } from "https://cdn.skypack.dev/graphql@v15.4.0?dts";
+import { Application, Router, send } from './src/config/deps.ts';
+import { buildSchema, graphql, Source } from "./src/config/deps.ts";
 
 const port = 8000;
 
