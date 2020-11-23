@@ -22,7 +22,6 @@ export type MutationResponse = {
 export type Booking = {
   __typename?: 'Booking';
   id: Scalars['ID'];
-  propertyId: Scalars['ID'];
   customer: Customer;
   property: Property;
   startTime: Scalars['DateTime'];

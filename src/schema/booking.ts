@@ -6,7 +6,6 @@ scalar DateTime
 
 type Booking {
     id: ID!
-    propertyId: ID!
     customer: Customer!
     property: Property!
     startTime: DateTime!
