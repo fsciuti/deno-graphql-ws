@@ -1,4 +1,4 @@
-import { Application, applyGraphQL, Router, RouterContext } from './config/deps.ts';
+import { Application, applyGraphQL, isHttpError, Router, RouterContext, Status } from './config/deps.ts';
 import { schema as typeDefs } from './schema/index.ts';
 import { resolvers } from './resolvers/index.ts'
 export class App {
@@ -13,6 +13,25 @@ export class App {
     }
 
     private initializeEventListener() {
+        this.app.use(async (ctx, next) => {
+            try {
+              await next();
+            } catch (err) {
+              if (isHttpError(err)) {
+                switch (err.status) {
+                  case Status.NotFound:
+                    // handle NotFound
+                    break;
+                  default:
+                    // handle other statuses
+                }
+              } else {
+                // rethrow if you can't handle the error
+                throw err;
+              }
+            }
+          });
+
         this.app.addEventListener('listen', ({ hostname, port, secure }) => {
             console.log(`🦕 Deno/GraphQL OAK Server running onc: ${
                 secure ? "https://" : "http://"

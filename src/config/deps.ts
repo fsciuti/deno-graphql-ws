@@ -1,6 +1,6 @@
 export { config } from "https://deno.land/x/dotenv/mod.ts";
 
-export { Application, Router, send } from 'https://deno.land/x/oak@v6.3.2/mod.ts';
+export { Application, Router, send, isHttpError, Status } from 'https://deno.land/x/oak@v6.3.2/mod.ts';
 export type { RouterContext } from 'https://deno.land/x/oak@v6.3.2/mod.ts';
 
 export {
