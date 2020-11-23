@@ -1,4 +1,6 @@
 import { serve } from "https://deno.land/std/http/server.ts";
+import { serveFile } from "https://deno.land/std/http/file_server.ts";
+
 import { buildSchema, graphql } from "https://cdn.skypack.dev/graphql@v15.4.0?dts";
 
 const port = 8000;
@@ -47,13 +49,14 @@ for await (const req of s) {
         const buf : Uint8Array = await Deno.readAll(req.body);
         const query = JSON.parse(decoder.decode(buf)).query;
         const response = await graphql(schema, query, resolvers);
-        
+
         req.respond({ body: JSON.stringify(response), headers });
         continue;
       }
 
       if (req.method === "GET") {
-        req.respond({ body: 'GraphiQL Rendering' });
+        const content = await serveFile(req, './graphiql.html');
+        req.respond(content);
         continue;
       }
 
