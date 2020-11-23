@@ -1,5 +1,5 @@
 import * as db from '../data/db.ts';
-import { MutationAddPropertyArgs, PropertyType } from "../schema/schemaTypes.ts";
+import { MutationAddPropertyArgs, PropertyType } from "../schema/types/schemaTypes.ts";
 
 export const propertyResolvers = {
     Query: {

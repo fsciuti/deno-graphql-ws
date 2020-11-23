@@ -1,4 +1,4 @@
-import { AddBookingInput, AddCustomerInput, AddPropertyInput, Booking, Customer, Property, Vehicle } from '../schema/schemaTypes.ts';
+import { AddBookingInput, AddCustomerInput, AddPropertyInput, Booking, Customer, Property, Vehicle } from '../schema/types/schemaTypes.ts';
 
 const data: any = {
     Booking: [

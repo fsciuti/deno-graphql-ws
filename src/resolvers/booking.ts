@@ -1,5 +1,5 @@
 import * as db from '../data/db.ts'
-import type { Booking, Customer, MutationAddBookingArgs, Property } from "../schema/schemaTypes.ts";
+import type { Booking, Customer, MutationAddBookingArgs, Property } from "../schema/types/schemaTypes.ts";
 
 export const bookingResolvers = {
     Query: {

@@ -1,5 +1,5 @@
 import * as db from '../data/db.ts'
-import type { MutationAddCustomerArgs } from "../schema/schemaTypes.ts";
+import type { MutationAddCustomerArgs } from "../schema/types/schemaTypes.ts";
 
 export const customerResolvers = {
   Query: {
