@@ -11,6 +11,10 @@ export class App {
                 secure ? "https://" : "http://"
             }${hostname ?? "localhost"}:${port}/ 🦕`);
         });
+
+        this.app.addEventListener("error", (evt) => {
+            console.error(evt.error);
+        });
     }
 
     public async listen() {
