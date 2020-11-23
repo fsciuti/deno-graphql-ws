@@ -1,4 +1,4 @@
-import { Application, applyGraphQL, gql, Router } from './config/deps.ts';
+import { Application, applyGraphQL, Router, RouterContext } from './config/deps.ts';
 import { schema as typeDefs } from './schema/index.ts';
 import { resolvers } from './resolvers/index.ts'
 export class App {
@@ -41,7 +41,16 @@ export class App {
         const GraphQLService = await applyGraphQL<Router>({
             Router,
             typeDefs,
-            resolvers
+            resolvers,
+            context: (ctx: RouterContext) => {
+                const authToken = ctx.request.headers.get('authorization');
+                
+                return {
+                  req: ctx.request,
+                  res: ctx.response,
+                  authToken
+                };
+              },
         });
         this.app.use(GraphQLService.routes(), GraphQLService.allowedMethods());
     }

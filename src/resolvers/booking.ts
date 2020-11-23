@@ -1,5 +1,5 @@
 import * as db from '../data/db.ts'
-import { GraphQLScalarType, Kind } from "./../config/deps.ts";
+import { GQLError, GraphQLScalarType, Kind } from "./../config/deps.ts";
 import type { Booking, Customer, MutationAddBookingArgs, Property } from "../schema/types/schemaTypes.ts";
 
 
@@ -36,7 +36,11 @@ export const bookingResolvers = {
         }
     },
     Mutation: {
-        addBooking(_parent: any, { input }: MutationAddBookingArgs) {
+        addBooking(_parent: any, { input }: MutationAddBookingArgs, context: any) {
+            if (!context.authToken) {
+                throw new GQLError({type: "Auth error", detail: "you must be logged in!"});
+            }
+
             const booking = db.addBooking(input!);
             return {
                 code: 200,
