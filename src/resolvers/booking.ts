@@ -1,5 +1,25 @@
 import * as db from '../data/db.ts'
+import { GraphQLScalarType, Kind } from "./../config/deps.ts";
 import type { Booking, Customer, MutationAddBookingArgs, Property } from "../schema/types/schemaTypes.ts";
+
+
+// Custom Scalar
+const DateTime = new GraphQLScalarType({
+    name: 'DateTime',
+    description: 'Date custom scalar type',
+    parseValue(value: any) {
+      return value; // value from the client
+    },
+    serialize(value: any) {
+      return value; // value sent to the client
+    },
+    parseLiteral(ast: any) {
+      if (ast.kind === Kind.INT) {
+        return parseInt(ast.value, 10); // ast value is always in string format
+      }
+      return null;
+    },
+  });
 
 export const bookingResolvers = {
     Query: {
