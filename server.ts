@@ -17,6 +17,22 @@ const properties = [
 ];
 
 for await (const req of s) {
-  const buf: Uint8Array = await Deno.readAll(req.body);
-  req.respond({ body: buf });
+  switch (req.url) {
+    case "/graphql": 
+      if (req.method === "POST") {
+        // GraphQL Endpoint
+        req.respond({ body: 'GraphQL Endpoint' });
+        continue;
+      }
+
+      if (req.method === "GET") {
+        req.respond({ body: 'GraphiQL Rendering' });
+        continue;
+      }
+
+      req.respond({ status: 405 });
+      break;
+    default:
+      req.respond({ body: 'Welcome to Deno-GraphQL Demo' });
+  }
 }
