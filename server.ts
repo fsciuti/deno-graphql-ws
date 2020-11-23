@@ -1,3 +1,5 @@
+import { App } from './src/app.ts';
+
 import { Application, Router, send } from './src/config/deps.ts';
 import { buildSchema, graphql, Source } from "./src/config/deps.ts";
 
@@ -50,9 +52,10 @@ router
     context.response.body =  response;
   });
 
-const app = new Application();
-app.use(router.routes(), router.allowedMethods());
+
+const gqlApp = new App(port);
+gqlApp.app.use(router.routes(), router.allowedMethods());
 
 console.log(`🦕 Deno OAK server running at http://localhost:${port}/ 🦕`);
 
-await app.listen({ port });
+gqlApp.listen();
